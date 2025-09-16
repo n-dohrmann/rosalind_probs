@@ -2,7 +2,7 @@
 
 CC = gcc
 CFLAGS = -Wall -Wextra -O2 -Icommon
-COMMON_SRC = common/utils.c
+COMMON_SRC = common/utils.c common/matrix.c
 
 PROBLEMS = ba10a ba10c
 
