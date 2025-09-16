@@ -1,37 +1,9 @@
-#include <stdio.h>
-#include <stddef.h>
-#include <stdlib.h>
-#include <string.h>
 
-// see https://rosalind.info/problems/ba10a/
+#include "../common/utils.h"
 
-#define MAX_LINE_LEN 1000
-#define READ_MODE "r"
 #define SKIP_LINES 4
 
-void get_line(FILE *fp, char* line)
-{
-  if (!fgets(line, MAX_LINE_LEN, fp)) {
-    printf("could not parse path from input file...\n");
-    exit(1);
-  }
-
-  // discard the new line char
-  char *pn = strchr(line, '\n');
-  if (pn) *pn = 0;
-}
-
-void skip_lines(FILE *fp, int to_skip)
-{
-  // skip unimportant lines
-  char line_buf[MAX_LINE_LEN] = { 0 };
-  for (int i = 0; i < to_skip; ++i) {
-    if (!fgets(line_buf, MAX_LINE_LEN, fp)) {
-      printf("error - file format not read as expected!\n");
-      exit(1);
-    }
-  }
-}
+// see https://rosalind.info/problems/ba10a/
 
 void print_transitions(double (*const transitions)[2][2])
 {
@@ -63,7 +35,7 @@ void parse_transitions(FILE *fp, double (*transitions)[2][2])
 
     // skip to next number and read
     num_start = num_end + 1;
-    while (*num_start == ' ') {}
+    while (*num_start++ == ' ') {}
     (*transitions)[row][1] = atof(num_start);
   }
 }
@@ -87,29 +59,10 @@ double get_probability(char* path, double (*transitions)[2][2])
   return probability;
 }
 
-FILE *open_file(int argc, char** argv)
-{
-  if (argc != 2) {
-    printf("must give name of input file!\n");
-    exit(1);
-  }
-
-  const char* in_file = argv[1];
-  printf("loading input file: %s\n", in_file);
-
-  FILE *fp = fopen(in_file, READ_MODE);
-
-  if (!fp) {
-    printf("could not open input file...\n");
-    exit(1);
-  }
-
-  return fp;
-}
 
 int main(int argc, char** argv)
 {
-  FILE *fp = open_file(argc, argv);
+  FILE *fp = open_file_arg(argc, argv);
   double transitions[2][2] = {{0.0, 0.0}, {0.0, 0.0}};
   char path[MAX_LINE_LEN] = { 0 };
 

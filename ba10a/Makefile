@@ -1,33 +1,8 @@
-# Compiler
-CC = gcc
+# prob1/Makefile
 
-# Compiler flags
-CFLAGS = -Wall -Wextra -O2
+all:
+	$(MAKE) -C .. build/ba10a
 
-# Target executable name
-TARGET = main
-
-# Source files
-SRCS = main.c
-
-# Object files
-OBJS = $(SRCS:.c=.o)
-
-# Default rule
-all: $(TARGET)
-
-# Linking
-$(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $^
-
-# Compilation
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-# Clean rule
 clean:
-	rm -f $(OBJS) $(TARGET)
-
-# Phony targets
-.PHONY: all clean
+	$(MAKE) -C .. clean
 
